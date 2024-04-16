@@ -1,0 +1,129 @@
+/* Reset default margin and padding */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Apply background image to the body */
+body {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative; /* Set position to relative for absolute positioning inside */
+    height: 100vh;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+/* Style for the header and navigation bar */
+header {
+    background-color: rgba(255, 26, 205, 0.5);
+    padding: 20px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ffc107;
+}
+
+/* Style for the main content section */
+main {
+    text-align: center;
+}
+
+.hero {
+    position: relative; /* Set position to relative for absolute positioning inside */
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.content {
+    position: absolute;
+    top: 50%; /* Position content vertically centered */
+    left: 78%; /* Position content horizontally centered */
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 10px;
+}
+
+.hero h1 {
+    font-size: 36px;
+}
+
+.hero p {
+    font-size: 20px;
+}
+
+/* Style for the Sign-in Form Overlay */
+.signin-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.signin-overlay h2 {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sign-in-form {
+    text-align: left;
+}
+
+.sign-in-form label {
+    color: #fff;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.sign-in-form input[type="email, password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10X;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.sign-in-form button {
+    width: 80%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sign-in-form button:hover {
+    background-color: #0056b3;
+}
