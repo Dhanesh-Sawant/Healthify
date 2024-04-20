@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +7,12 @@
     <link rel="stylesheet" href="basic_calorie_page.css">
 </head>
 <body>
-    <div class="container">
-        <div class="calculator">
-            <h2>Calorie Calculator</h2>
-            
-            <form id="calorieForm">
+  <div class="container">
+    <div class="calculator">
+        <h2>Calorie Calculator</h2>
+        
+        <div class="flex-container">
+            <form id="calorieForm" class="form">
                 <div class="form-group">
                     <label for="age">Age (years):</label>
                     <input type="number" id="age" name="age" required>
@@ -42,75 +41,130 @@
                         <option value="inactive">Inactive</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="goal">Goal:</label>
-                    <br>
-                    <input type="radio" id="lose" name="goal" value="lose" checked>
-                    <label for="lose">Lose Weight</label>
-                    <input type="radio" id="maintain" name="goal" value="maintain">
-                    <label for="maintain">Maintain Weight</label>
-                    <input type="radio" id="gain" name="goal" value="gain">
-                    <label for="gain">Gain Weight</label>
-                </div>
                 <button type="submit">Calculate</button>
             </form>
-            <div id="results"></div>
+            <div id="results" class="results">
+                <h3 class="goal">Choose your goal</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Goal</th>
+                            <th>Calories</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Weight Loss</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Mild Weight Loss</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Extreme Weight Loss</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Maintain Weight</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Gain Weight</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <script>
-        function calculateCalories() {
-            // Get user input values
-            const age = parseInt(document.getElementById("age").value);
-            const gender = document.querySelector('input[name="gender"]:checked').value;
-            const height = parseInt(document.getElementById("height").value);
-            const weight = parseInt(document.getElementById("weight").value);
-            const activity = document.getElementById("activity").value;
-            const goal = document.querySelector('input[name="goal"]:checked').value;
-          
-            // Calculate BMR (Basal Metabolic Rate)
-            let bmr;
-            if (gender === "male") {
-              bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
-            } else {
-              bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
-            }
-          
-            // Calculate activity multiplier
-            let activityMultiplier;
-            switch (activity) {
-              case "active":
+</div>
+
+<script>
+    function calculateCalories() {
+        // Get user input values
+        const age = parseInt(document.getElementById("age").value);
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const height = parseInt(document.getElementById("height").value);
+        const weight = parseInt(document.getElementById("weight").value);
+        const activity = document.getElementById("activity").value;
+    
+        // Calculate BMR (Basal Metabolic Rate)
+        let bmr;
+        if (gender === "male") {
+            bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        } else {
+            bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+        }
+    
+        // Calculate activity multiplier
+        let activityMultiplier;
+        switch (activity) {
+            case "active":
                 activityMultiplier = 1.55;
                 break;
-              case "moderate":
+            case "moderate":
                 activityMultiplier = 1.375;
                 break;
-              case "inactive":
+            case "inactive":
                 activityMultiplier = 1.2;
                 break;
-            }
-          
-            // Calculate calorie goals based on activity level and goal
-            let calorieGoal;
-            if (goal === "lose") {
-              calorieGoal = bmr * activityMultiplier - 500; // Subtract 500 calories for weight loss
-            } else if (goal === "maintain") {
-              calorieGoal = bmr * activityMultiplier;
-            } else if (goal === "gain") {
-              calorieGoal = bmr * activityMultiplier + 500; // Add 500 calories for weight gain
-            }
-          
-            // Display the results
-            const resultsDiv = document.getElementById("results");
-            resultsDiv.innerHTML = `Your estimated daily calorie goal for ${goal} is: ${Math.round(calorieGoal)} calories`;
-          }
-          
-          // Add event listener to the form submit button
-          const form = document.getElementById("calorieForm");
-          form.addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent default form submission behavior
-            calculateCalories();
-          });
+        }
+    
+        // Calculate calorie goals based on activity level and goal
+        const loseCalorieGoal = bmr * activityMultiplier - 500; // Subtract 500 calories for weight loss
+        const mildLoseCalorieGoal = bmr * activityMultiplier - 250; // Subtract 250 calories for mild weight loss
+        const extremeLoseCalorieGoal = bmr * activityMultiplier - 750; // Subtract 750 calories for extreme weight loss
+        const maintainCalorieGoal = bmr * activityMultiplier;
+        const gainCalorieGoal = bmr * activityMultiplier + 500; // Add 500 calories for weight gain
+    
+        // Populate table rows
+        const rows = [
+            { goal: "Weight Loss", calorie: Math.round(loseCalorieGoal) },
+            { goal: "Mild Weight Loss", calorie: Math.round(mildLoseCalorieGoal) },
+            { goal: "Extreme Weight Loss", calorie: Math.round(extremeLoseCalorieGoal) },
+            { goal: "Maintain Weight", calorie: Math.round(maintainCalorieGoal) },
+            { goal: "Gain Weight", calorie: Math.round(gainCalorieGoal) }
+        ];
+    
+        // Update existing table with new values
+        const table = document.querySelector('table');
+        const tbody = table.querySelector('tbody');
+    
+        // Loop through rows to update values
+        rows.forEach((rowData, index) => {
+            const row = tbody.children[index];
+            const calorieCell = row.lastElementChild;
+            calorieCell.textContent = rowData.calorie;
+        });
+    }
+    
+    // Add event listener to the form submit button
+    const form = document.getElementById("calorieForm");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+        calculateCalories();
+    });
+
+    // Add event listener to table rows
+document.querySelectorAll('#results tbody tr').forEach(row => {
+    row.addEventListener('click', function() {
+        // Retrieve type (goal) and calorie value
+        const type = this.querySelector('td:first-child').textContent;
+        const calorieValue = this.querySelector('td:last-child').textContent;
+
+        // Store data in local storage
+        localStorage.setItem('selectedType', type);
+        localStorage.setItem('selectedCalorieValue', calorieValue);
+
+        // Redirect to index3.html
+        window.location.href = '/index3.html';
+    });
+});
+
     </script>
+    
 </body>
 </html>
+
 

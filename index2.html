@@ -15,6 +15,7 @@
                 <li><a href="#">About</a></li>
                 <li><a href="#">Services</a></li>
                 <li><a href="#">Contact</a></li>
+                <li><a href="#">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -22,22 +23,39 @@
     <main>
         <section class="hero">
             <img src="img1.png" alt="">
+            <div class="register">Register here</div>
             <div class="content">
              
                 <!-- Sign-in Form -->
                 <div class="signin-overlay">
                     <h2>Sign In</h2>
-                    <form class="sign-in-form">
+                    <form class="sign-in-form" id="signin-form">
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" placeholder="Enter your email" required>
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                        <button type="submit">Sign In</button>
+                        <button type="submit" onclick="validateSignIn(event)">Sign In</button>
                     </form>
                 </div>
             </div>
         </section>
     </main>
+
+    <script>
+        function validateSignIn(event) {
+            event.preventDefault(); // Prevent form submission
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            if (email && password) {
+                // Store the user's email in localStorage
+                localStorage.setItem("user", email);
+                // If both email and password are provided, redirect to the home page
+                window.location.href = "index.html"; // Change "home.html" to your actual home page URL
+            } else {
+                alert("Please fill in both email and password fields.");
+            }
+        }
+    </script>
 
 </body>
 </html>

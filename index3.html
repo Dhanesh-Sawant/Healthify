@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .calorie-info {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .calorie-info h2 {
+            margin-top: 0;
+        }
+
+        .calorie-info p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="user"></h1>
+        <div class="calorie-info">
+            <h2>Selected Calorie Type and Value:</h2>
+            <p><strong>Type:</strong> <span id="calorieType"></span></p>
+            <p><strong>Value:</strong> <span id="calorieValue"></span></p>
+        </div>
+        <div class="calorie-info" id="foodList">
+            <h2>Selected Food Items:</h2>
+            <!-- Food items will be added dynamically here -->
+        </div>
+        <div class="nutrients">
+            
+        </div>
+    </div>
+
+    <script>
+        // Retrieve calorie type and value from localStorage
+        const calorieType = localStorage.getItem('selectedType');
+        const calorieValue = localStorage.getItem('selectedCalorieValue');
+        const user = localStorage.getItem('user');
+        const foodList = JSON.parse(localStorage.getItem('mealList'));
+
+        // Update HTML elements with retrieved data
+        document.getElementById('calorieType').textContent = calorieType;
+        document.getElementById('calorieValue').textContent = calorieValue;
+        document.getElementById('user').textContent = "Welcome " + user;
+
+        // Loop through the food items and add them to the list
+        const foodListContainer = document.getElementById('foodList');
+        foodList.forEach(food => {
+            const foodItem = document.createElement('div');
+            foodItem.classList.add('food-item');
+            foodItem.innerHTML = `
+                <p><strong>Name:</strong> ${food.name}</p>
+                <p><strong>Calories:</strong> ${food.calorie}</p>
+                <hr/>
+            `;
+            foodListContainer.appendChild(foodItem);
+        });
+    </script>
+</body>
+</html>
