@@ -7,16 +7,16 @@
     <link rel="stylesheet" href="basic_calorie_page.css">
 </head>
 <style>
-    body{
+    body {
         background-image: url("https://img.freepik.com/premium-photo/healthy-lifestyle-food-sport-concept-pink-pastel_53476-3831.jpg");
         background-size: cover;
     }
 </style>
 <body>
-  <div class="container">
+<div class="container">
     <div class="calculator">
         <h2>Calorie Calculator</h2>
-        
+
         <div class="flex-container">
             <form id="calorieForm" class="form">
                 <div class="form-group">
@@ -50,35 +50,36 @@
                 <button type="submit">Calculate</button>
             </form>
             <div id="results" class="results">
+                <div id="bmiContainer"></div> <!-- Container for displaying BMI -->
                 <h3 class="goal">Choose your goal</h3>
                 <table>
                     <thead>
-                        <tr>
-                            <th>Goal</th>
-                            <th>Calories</th>
-                        </tr>
+                    <tr>
+                        <th>Goal</th>
+                        <th>Calories</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Weight Loss</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Mild Weight Loss</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Extreme Weight Loss</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Maintain Weight</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Gain Weight</td>
-                            <td>-</td>
-                        </tr>
+                    <tr>
+                        <td>Weight Loss</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Mild Weight Loss</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Extreme Weight Loss</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Maintain Weight</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Gain Weight</td>
+                        <td>-</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -94,7 +95,7 @@
         const height = parseInt(document.getElementById("height").value);
         const weight = parseInt(document.getElementById("weight").value);
         const activity = document.getElementById("activity").value;
-    
+
         // Calculate BMR (Basal Metabolic Rate)
         let bmr;
         if (gender === "male") {
@@ -102,7 +103,7 @@
         } else {
             bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
         }
-    
+
         // Calculate activity multiplier
         let activityMultiplier;
         switch (activity) {
@@ -116,14 +117,14 @@
                 activityMultiplier = 1.2;
                 break;
         }
-    
+
         // Calculate calorie goals based on activity level and goal
         const loseCalorieGoal = bmr * activityMultiplier - 500; // Subtract 500 calories for weight loss
         const mildLoseCalorieGoal = bmr * activityMultiplier - 250; // Subtract 250 calories for mild weight loss
         const extremeLoseCalorieGoal = bmr * activityMultiplier - 750; // Subtract 750 calories for extreme weight loss
         const maintainCalorieGoal = bmr * activityMultiplier;
         const gainCalorieGoal = bmr * activityMultiplier + 500; // Add 500 calories for weight gain
-    
+
         // Populate table rows
         const rows = [
             { goal: "Weight Loss", calorie: Math.round(loseCalorieGoal) },
@@ -132,19 +133,40 @@
             { goal: "Maintain Weight", calorie: Math.round(maintainCalorieGoal) },
             { goal: "Gain Weight", calorie: Math.round(gainCalorieGoal) }
         ];
-    
+
         // Update existing table with new values
         const table = document.querySelector('table');
         const tbody = table.querySelector('tbody');
-    
+
         // Loop through rows to update values
         rows.forEach((rowData, index) => {
             const row = tbody.children[index];
             const calorieCell = row.lastElementChild;
             calorieCell.textContent = rowData.calorie;
         });
+
+        // Calculate BMI
+        const heightInMeters = height / 100; // Convert height from cm to meters
+        const bmi = weight / (heightInMeters * heightInMeters);
+        const bmiCategory = getBMICategory(bmi);
+
+        // Display BMI and category above "Choose your goal"
+        const bmiContainer = document.getElementById('bmiContainer');
+        bmiContainer.innerHTML = `<strong>Your BMI: ${bmi.toFixed(1)} (${bmiCategory})</strong>`;
     }
-    
+
+    function getBMICategory(bmi) {
+        if (bmi < 18.5) {
+            return "Underweight";
+        } else if (bmi >= 18.5 && bmi < 25) {
+            return "Normal weight";
+        } else if (bmi >= 25 && bmi < 30) {
+            return "Overweight";
+        } else {
+            return "Obese";
+        }
+    }
+
     // Add event listener to the form submit button
     const form = document.getElementById("calorieForm");
     form.addEventListener("submit", function(event) {
@@ -152,25 +174,23 @@
         calculateCalories();
     });
 
-    // Add event listener to table rows
-document.querySelectorAll('#results tbody tr').forEach(row => {
-    row.addEventListener('click', function() {
-        // Retrieve type (goal) and calorie value
-        const type = this.querySelector('td:first-child').textContent;
-        const calorieValue = this.querySelector('td:last-child').textContent;
+    // Add event listener to table rows (optional, for further functionality)
+    document.querySelectorAll('#results tbody tr').forEach(row => {
+        row.addEventListener('click', function() {
+            // Retrieve type (goal) and calorie value
+            const type = this.querySelector('td:first-child').textContent;
+            const calorieValue = this.querySelector('td:last-child').textContent;
 
-        // Store data in local storage
-        localStorage.setItem('selectedType', type);
-        localStorage.setItem('selectedCalorieValue', calorieValue);
+            // Store data in local storage (example usage)
+            localStorage.setItem('selectedType', type);
+            localStorage.setItem('selectedCalorieValue', calorieValue);
 
-        // Redirect to index3.html
-        window.location.href = '/index3.html';
+            // Redirect to index3.html (example usage)
+            window.location.href = 'index3.html';
+        });
     });
-});
 
-    </script>
-    
+</script>
+
 </body>
 </html>
-
-

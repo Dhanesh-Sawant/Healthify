@@ -42,6 +42,22 @@
         .calorie-info p {
             margin-bottom: 10px;
         }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +78,10 @@
         </div>
         <div class="nutrients">
             <canvas id="myChart2" width="400" height="400"></canvas>
+        </div>
+        <div class="button-container">
+            <button onclick="goToHomePage()">Go to Home Page</button>
+            <button onclick="goToAddMealPage()">Go to Add Meal Page</button>
         </div>
     </div>
 
@@ -91,7 +111,7 @@
                 protein: 0,
                 sodium: 0,
                 sugar: 0,
-                fiber:0
+                fiber: 0
             };
 
             foodList.forEach(food => {
@@ -99,10 +119,8 @@
 
                 // Add nutrients of each food item to the total
                 Object.keys(totalNutrients).forEach(nutrient => {
-                    totalNutrients[nutrient] += Number (food.nutrients[nutrient]) || 0;
+                    totalNutrients[nutrient] += Number(food.nutrients[nutrient]) || 0;
                 });
-
-                console.log(totalNutrients)
 
                 const foodItem = document.createElement('div');
                 foodItem.classList.add('food-item');
@@ -124,7 +142,6 @@
             console.log("No food items found in localStorage.");
         }
 
-
         function renderChart(data) {
             const ctx = document.getElementById('myChart2').getContext('2d');
             const myChart = new Chart(ctx, {
@@ -142,8 +159,7 @@
                             data.potassium,
                             data.protein,
                             data.sodium,
-                            data.sugar,
-                   
+                            data.sugar
                         ],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
@@ -171,8 +187,8 @@
                     }]
                 },
                 options: {
-                    responsive: true, // Set to false to disable resizing
-                    maintainAspectRatio: true, // Set to false to allow stretching
+                    responsive: true,
+                    maintainAspectRatio: true,
                     scales: {
                         y: {
                             beginAtZero: true
@@ -180,6 +196,14 @@
                     }
                 }
             });
+        }
+
+        function goToHomePage() {
+            window.location.href = 'index.html'; // Redirect to home page
+        }
+
+        function goToAddMealPage() {
+            window.location.href = 'index4.html'; // Redirect to add meal page
         }
     </script>
 </body>

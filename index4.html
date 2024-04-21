@@ -30,19 +30,42 @@
     background-color: rgb(242, 219, 232);
 }
 
+.btn.whoop {
+    background-color: black; /* Black background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chart {
+    width: 200%; /* Set chart container to full width */
+    max-width: 600px; /* Limit the maximum width */
+    margin: 0 auto; /* Center the chart container */
+}
+
+
+canvas {
+    width: 100% !important; /* Make the canvas responsive */
+    height: 70%;
+    background-color: white; /* Set chart canvas background color to white */
+}
+
 
     </style>
 </head>
 <body>
-    <!-- Loading spinner -->
+    
     <div class="loading-spinner">
-        <!-- SVG code for loading spinner -->
+    
         <svg width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
             <circle cx="50" cy="50" fill="none" stroke="pink" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
                 <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
             </circle>
         </svg>
-    </div>
+    </div> 
 
     <div class="container">
         <div class="row justify-content-center">
@@ -80,7 +103,7 @@
                             <button id="addToMealBtn">Add to Meal</button>
                         </div>
                         <div>
-                            <button><a href="/index3.html">Check your dashboard</a></button>
+                            <button><a href="index3.html">Check your dashboard</a></button>
                         </div>
                     </div>
                 </div>
@@ -122,6 +145,10 @@
                 return response.json();
             })
             .then(data => {
+                if (data.length === 0) {
+                    // Display alert if response data is empty (food not found)
+                    alert('Please enter a valid food name.');
+                } else{
                 console.log(data);
                 // Update HTML elements with nutritional values
                 document.getElementById('calories').textContent = `${data[0].calories} Calories`;
@@ -237,7 +264,7 @@ alert('Meal added to local storage!');
 
                 // Render Chart
                 renderChart(data[0]);
-            })
+            }})
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
                 loadingSpinner.style.display = 'none';
