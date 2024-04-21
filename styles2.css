@@ -78,52 +78,46 @@ main {
     font-size: 20px;
 }
 
-/* Style for the Sign-in Form Overlay */
 .signin-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px; /* Rounded corners */
     padding: 20px;
-    border-radius: 8px;
-}
-
-.signin-overlay h2 {
-    color: #fff;
-    font-size: 24px;
-    margin-bottom: 20px;
+    margin-top: -170px;
 }
 
 .sign-in-form {
-    text-align: left;
+    display: flex;
+    flex-direction: column;
 }
 
 .sign-in-form label {
-    color: #fff;
-    display: block;
     margin-bottom: 10px;
+    color: black;
 }
 
-.sign-in-form input[type="email, password"] {
-    width: 100%;
+.sign-in-form input[type="email"],
+.sign-in-form input[type="password"] {
+    padding: 10px 40px;
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.8); /* Light background color */
+}
+
+.sign-in-form input[type="email"]:focus,
+.sign-in-form input[type="password"]:focus {
+    outline: none;
+}
+
+.sign-in-form button[type="submit"] {
     padding: 10px;
-    margin-top: 10X;
-    font-size: 16px;
     border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.sign-in-form button {
-    width: 80%;
-    margin-top: 20px;
-    padding: 12px;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
+    border-radius: 20px; /* Rounded corners */
+    background: linear-gradient(to right, #FF69B4, #FFC0CB); /* Light pink gradient on hover */
+    color: #fff; /* White text color */
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.sign-in-form button:hover {
-    background-color: #0056b3;
+.sign-in-form button[type="submit"]:hover {
+    background: linear-gradient(to right, #e30a77, #FFC0CB); /* Light pink gradient on hover */
 }
+

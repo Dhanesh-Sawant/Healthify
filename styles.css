@@ -51,6 +51,12 @@ main {
     text-align: center;
 }
 
+.header{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 12px;
+}
+
 .hero {
     position: relative; /* Set position to relative for absolute positioning inside */
 }
@@ -59,6 +65,7 @@ main {
     position: absolute;
     width: 200px; /* Adjust width as needed */
     z-index: 1; /* Ensure images are above the background image */
+    margin-top: -300px;
 }
 
 .top-image-1 {
